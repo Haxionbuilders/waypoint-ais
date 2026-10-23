@@ -318,6 +318,40 @@ CRITICAL INSTRUCTIONS:
     }
   }
 
+  // Option D: SenseTime SenseNova API
+  const senseNovaKey = Deno.env.get("SENSENOVA_API_KEY") || Deno.env.get("sensenova_api_key");
+  if (senseNovaKey) {
+    try {
+      const res = await fetch("https://api.sensenova.cn/compatible-mode/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${senseNovaKey}`,
+        },
+        body: JSON.stringify({
+          model: "SenseChat-5",
+          messages: [
+            { role: "system", content: "You generate concise delay notification drafts in valid JSON format with keys 'subject' and 'body'. Only use verified evidence provided." },
+            { role: "user", content: prompt },
+          ],
+          response_format: { type: "json_object" },
+          temperature: 0.2,
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const content = data.choices?.[0]?.message?.content || "";
+        const jsonMatch = content.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          const parsed = JSON.parse(jsonMatch[0]);
+          if (parsed.subject && parsed.body) return parsed;
+        }
+      }
+    } catch (e) {
+      console.warn("SenseNova call failed:", e);
+    }
+  }
+
   // Fallback: Deterministic Evidence-Based Template Generator
   const weatherNote = weather.weatherCode >= 51 ? ` due to ${weather.condition.toLowerCase()} and road pacing` : "";
   const delayStr = delayMinutes > 0 ? `approximately ${delayMinutes} minutes behind schedule` : "on a tight schedule";

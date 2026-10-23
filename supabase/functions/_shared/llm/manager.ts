@@ -157,8 +157,148 @@ function createGeminiAdapter(config: ProviderConfig): ProviderAdapter {
   };
 }
 
+/** SenseNova adapter (OpenAI-compatible chat completions). */
+function createSenseNovaAdapter(config: ProviderConfig): ProviderAdapter {
+  return {
+    name: config.name,
+    capabilities: config.capabilities,
+    model: config.model,
+    async generateText(request: LLMRequest): Promise<LLMResponse> {
+      const body: Record<string, unknown> = {
+        model: config.model,
+        messages: request.messages,
+      };
+      if (request.temperature !== undefined) body.temperature = request.temperature;
+      if (request.maxTokens !== undefined) body.max_tokens = request.maxTokens;
+      if (request.jsonMode) body.response_format = { type: 'json_object' };
+
+      const start = Date.now();
+      const res = await fetch(config.endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${config.apiKey}`,
+        },
+        body: JSON.stringify(body),
+      });
+      const latencyMs = Date.now() - start;
+
+      if (!res.ok) {
+        const errBody = await res.text();
+        const errorClass = classifyError(res.status, errBody);
+        logAttempt({
+          provider: config.name,
+          model: config.model,
+          latency_ms: latencyMs,
+          success: false,
+          error_class: errorClass,
+          timestamp: new Date().toISOString(),
+        });
+        throw {
+          errorClass,
+          provider: config.name,
+          model: config.model,
+          message: errBody,
+          statusCode: res.status,
+          retryable: isRetryable(errorClass),
+        } as import('./types.ts').LLMError;
+      }
+
+      const data = await res.json();
+      const text = data?.choices?.[0]?.message?.content ?? '';
+      const finishReason = data?.choices?.[0]?.finish_reason;
+
+      logAttempt({
+        provider: config.name,
+        model: config.model,
+        latency_ms: latencyMs,
+        success: true,
+        timestamp: new Date().toISOString(),
+      });
+
+      return {
+        text,
+        provider: config.name,
+        model: config.model,
+        latencyMs,
+        finishReason,
+      };
+    },
+  };
+}
+
 /** Groq adapter (OpenAI-compatible chat completions). */
 function createGroqAdapter(config: ProviderConfig): ProviderAdapter {
+  return {
+    name: config.name,
+    capabilities: config.capabilities,
+    model: config.model,
+    async generateText(request: LLMRequest): Promise<LLMResponse> {
+      const body: Record<string, unknown> = {
+        model: config.model,
+        messages: request.messages,
+      };
+      if (request.temperature !== undefined) body.temperature = request.temperature;
+      if (request.maxTokens !== undefined) body.max_tokens = request.maxTokens;
+      if (request.jsonMode) body.response_format = { type: 'json_object' };
+
+      const start = Date.now();
+      const res = await fetch(config.endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${config.apiKey}`,
+        },
+        body: JSON.stringify(body),
+      });
+      const latencyMs = Date.now() - start;
+
+      if (!res.ok) {
+        const errBody = await res.text();
+        const errorClass = classifyError(res.status, errBody);
+        logAttempt({
+          provider: config.name,
+          model: config.model,
+          latency_ms: latencyMs,
+          success: false,
+          error_class: errorClass,
+          timestamp: new Date().toISOString(),
+        });
+        throw {
+          errorClass,
+          provider: config.name,
+          model: config.model,
+          message: errBody,
+          statusCode: res.status,
+          retryable: isRetryable(errorClass),
+        } as import('./types.ts').LLMError;
+      }
+
+      const data = await res.json();
+      const text = data?.choices?.[0]?.message?.content ?? '';
+      const finishReason = data?.choices?.[0]?.finish_reason;
+
+      logAttempt({
+        provider: config.name,
+        model: config.model,
+        latency_ms: latencyMs,
+        success: true,
+        timestamp: new Date().toISOString(),
+      });
+
+      return {
+        text,
+        provider: config.name,
+        model: config.model,
+        latencyMs,
+        finishReason,
+      };
+    },
+  };
+}
+
+/** SenseNova adapter (OpenAI-compatible chat completions). */
+function createSenseNovaAdapter(config: ProviderConfig): ProviderAdapter {
   return {
     name: config.name,
     capabilities: config.capabilities,
@@ -297,6 +437,76 @@ function createOpenRouterAdapter(config: ProviderConfig): ProviderAdapter {
   };
 }
 
+/** SenseNova adapter (OpenAI-compatible chat completions). */
+function createSenseNovaAdapter(config: ProviderConfig): ProviderAdapter {
+  return {
+    name: config.name,
+    capabilities: config.capabilities,
+    model: config.model,
+    async generateText(request: LLMRequest): Promise<LLMResponse> {
+      const body: Record<string, unknown> = {
+        model: config.model,
+        messages: request.messages,
+      };
+      if (request.temperature !== undefined) body.temperature = request.temperature;
+      if (request.maxTokens !== undefined) body.max_tokens = request.maxTokens;
+      if (request.jsonMode) body.response_format = { type: 'json_object' };
+
+      const start = Date.now();
+      const res = await fetch(config.endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${config.apiKey}`,
+        },
+        body: JSON.stringify(body),
+      });
+      const latencyMs = Date.now() - start;
+
+      if (!res.ok) {
+        const errBody = await res.text();
+        const errorClass = classifyError(res.status, errBody);
+        logAttempt({
+          provider: config.name,
+          model: config.model,
+          latency_ms: latencyMs,
+          success: false,
+          error_class: errorClass,
+          timestamp: new Date().toISOString(),
+        });
+        throw {
+          errorClass,
+          provider: config.name,
+          model: config.model,
+          message: errBody,
+          statusCode: res.status,
+          retryable: isRetryable(errorClass),
+        } as import('./types.ts').LLMError;
+      }
+
+      const data = await res.json();
+      const text = data?.choices?.[0]?.message?.content ?? '';
+      const finishReason = data?.choices?.[0]?.finish_reason;
+
+      logAttempt({
+        provider: config.name,
+        model: config.model,
+        latency_ms: latencyMs,
+        success: true,
+        timestamp: new Date().toISOString(),
+      });
+
+      return {
+        text,
+        provider: config.name,
+        model: config.model,
+        latencyMs,
+        finishReason,
+      };
+    },
+  };
+}
+
 // ---------------------------------------------------------------------------
 // Provider configuration
 // ---------------------------------------------------------------------------
@@ -342,6 +552,18 @@ export function getProviderConfigs(): ProviderConfig[] {
     });
   }
 
+  const senseNovaKey = Deno.env.get('SENSENOVA_API_KEY') || Deno.env.get('sensenova_api_key');
+  if (senseNovaKey) {
+    configs.push({
+      name: 'sensenova',
+      model: 'SenseChat-5',
+      apiKey: senseNovaKey,
+      endpoint: 'https://api.sensenova.cn/compatible-mode/v1/chat/completions',
+      capabilities: ['json_mode', 'tool_calling', 'streaming'],
+      priority: 4,
+    });
+  }
+
   // Sort by priority ascending (lower number = higher priority).
   return configs.sort((a, b) => a.priority - b.priority);
 }
@@ -359,6 +581,8 @@ export function createAdapter(config: ProviderConfig): ProviderAdapter {
       return createGroqAdapter(config);
     case 'openrouter':
       return createOpenRouterAdapter(config);
+    case 'sensenova':
+      return createSenseNovaAdapter(config);
     default:
       throw new Error(`Unknown provider: ${config.name}`);
   }

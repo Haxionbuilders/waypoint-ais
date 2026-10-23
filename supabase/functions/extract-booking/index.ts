@@ -117,6 +117,34 @@ serve(async (req) => {
           return JSON.parse(raw)
         },
       },
+      {
+        name: 'sensenova',
+        key: Deno.env.get('SENSENOVA_API_KEY') || Deno.env.get('sensenova_api_key'),
+        call: async (apiKey: string) => {
+          const res = await fetch('https://api.sensenova.cn/compatible-mode/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify({
+              model: 'SenseChat-5',
+              messages: [
+                { role: 'system', content: 'You extract structured booking data from travel emails. Return ONLY valid JSON.' },
+                { role: 'user', content: buildPrompt(text) },
+              ],
+              temperature: 0.1,
+              max_tokens: 1024,
+              response_format: { type: 'json_object' },
+            }),
+          })
+          if (!res.ok) throw new Error(`SenseNova error: ${res.status}`)
+          const data = await res.json()
+          const raw = data.choices?.[0]?.message?.content
+          if (!raw) throw new Error('No content from SenseNova')
+          return JSON.parse(raw)
+        },
+      },
     ]
 
     let extraction: BookingExtraction | null = null
