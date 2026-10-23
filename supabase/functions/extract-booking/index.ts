@@ -37,7 +37,7 @@ serve(async (req) => {
     const providers = [
       {
         name: 'gemini',
-        key: Deno.env.get('GEMINI_API_KEY'),
+        key: Deno.env.get('GEMINI_API_KEY') || Deno.env.get('gemini_api_key'),
         call: async (apiKey: string) => {
           const res = await fetch(
             `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
@@ -63,7 +63,7 @@ serve(async (req) => {
       },
       {
         name: 'groq',
-        key: Deno.env.get('GROQ_API_KEY'),
+        key: Deno.env.get('GROQ_API_KEY') || Deno.env.get('groq_api_key'),
         call: async (apiKey: string) => {
           const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
@@ -91,7 +91,7 @@ serve(async (req) => {
       },
       {
         name: 'openrouter',
-        key: Deno.env.get('OPENROUTER_API_KEY'),
+        key: Deno.env.get('OPENROUTER_API_KEY') || Deno.env.get('openrouter_api_key'),
         call: async (apiKey: string) => {
           const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
             method: 'POST',

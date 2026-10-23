@@ -61,7 +61,7 @@ Deno.serve(async (req: Request) => {
     let visionResult: VisionAnalysisResult | null = null;
 
     // 1. Try Google AI Studio (Gemini 1.5 Flash / 2.0 Flash)
-    const geminiKey = Deno.env.get("GEMINI_API_KEY");
+    const geminiKey = Deno.env.get("GEMINI_API_KEY") || Deno.env.get("gemini_api_key");
     if (geminiKey) {
       try {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`;
@@ -115,7 +115,7 @@ Deno.serve(async (req: Request) => {
 
     // 2. Try OpenRouter Vision ($0 or multimodal models)
     if (!visionResult) {
-      const openRouterKey = Deno.env.get("OPENROUTER_API_KEY");
+      const openRouterKey = Deno.env.get("OPENROUTER_API_KEY") || Deno.env.get("openrouter_api_key");
       if (openRouterKey) {
         try {
           const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {

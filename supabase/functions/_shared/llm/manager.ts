@@ -305,7 +305,7 @@ function createOpenRouterAdapter(config: ProviderConfig): ProviderAdapter {
 export function getProviderConfigs(): ProviderConfig[] {
   const configs: ProviderConfig[] = [];
 
-  const geminiKey = Deno.env.get('GEMINI_API_KEY');
+  const geminiKey = Deno.env.get('GEMINI_API_KEY') || Deno.env.get('gemini_api_key');
   if (geminiKey) {
     configs.push({
       name: 'gemini',
@@ -318,7 +318,7 @@ export function getProviderConfigs(): ProviderConfig[] {
     });
   }
 
-  const groqKey = Deno.env.get('GROQ_API_KEY');
+  const groqKey = Deno.env.get('GROQ_API_KEY') || Deno.env.get('groq_api_key');
   if (groqKey) {
     configs.push({
       name: 'groq',
@@ -330,7 +330,7 @@ export function getProviderConfigs(): ProviderConfig[] {
     });
   }
 
-  const openRouterKey = Deno.env.get('OPENROUTER_API_KEY');
+  const openRouterKey = Deno.env.get('OPENROUTER_API_KEY') || Deno.env.get('openrouter_api_key');
   if (openRouterKey) {
     configs.push({
       name: 'openrouter',

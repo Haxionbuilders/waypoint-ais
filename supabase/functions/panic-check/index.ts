@@ -231,7 +231,7 @@ CRITICAL INSTRUCTIONS:
 4. Output STRICTLY a JSON object with two string fields: "subject" and "body". No Markdown wrapping, no extra keys.`;
 
   // Option A: Google AI Studio (Gemini 2.5 Flash / 1.5 Flash)
-  const geminiKey = Deno.env.get("GEMINI_API_KEY");
+  const geminiKey = Deno.env.get("GEMINI_API_KEY") || Deno.env.get("gemini_api_key");
   if (geminiKey) {
     try {
       const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`, {
@@ -256,7 +256,7 @@ CRITICAL INSTRUCTIONS:
   }
 
   // Option B: GroqCloud (Llama 3.3 / Llama 3.1)
-  const groqKey = Deno.env.get("GROQ_API_KEY");
+  const groqKey = Deno.env.get("GROQ_API_KEY") || Deno.env.get("groq_api_key");
   if (groqKey) {
     try {
       const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -289,7 +289,7 @@ CRITICAL INSTRUCTIONS:
   }
 
   // Option C: OpenRouter Free Models
-  const openRouterKey = Deno.env.get("OPENROUTER_API_KEY");
+  const openRouterKey = Deno.env.get("OPENROUTER_API_KEY") || Deno.env.get("openrouter_api_key");
   if (openRouterKey) {
     try {
       const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
