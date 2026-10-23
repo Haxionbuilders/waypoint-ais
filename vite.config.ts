@@ -4,12 +4,8 @@ import { fileURLToPath, URL } from 'node:url';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // For GitHub Pages: set base to '/<repo-name>/' when deploying
-  // e.g., base: '/Way_point_agents-main/'
-  // Leave as '/' for local dev or custom domain
-  base: process.env.GITHUB_PAGES === 'true'
-    ? '/Way_point_agents-main/'
-    : '/',
+  // Relative base './' ensures assets load correctly on GitHub Pages regardless of repo name
+  base: process.env.GITHUB_PAGES === 'true' ? './' : '/',
   plugins: [react()],
   resolve: {
     alias: {
