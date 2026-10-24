@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  Mic, MicOff, Volume2, VolumeX, X, Sparkles, AlertTriangle,
-  Compass, Radio, Check, RotateCcw
-} from 'lucide-react';
-import { processAutonomousQuery, generateClientLLM } from '@/lib/clientAi';
+import { Mic, Volume2, VolumeX, X, AlertTriangle, Radio } from 'lucide-react';
+import { processAutonomousQuery } from '@/lib/clientAi';
 
 interface VoiceCopilotModalProps {
   isOpen: boolean;

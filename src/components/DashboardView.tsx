@@ -5,7 +5,6 @@ import {
   Camera,
   Mail,
   RotateCcw,
-  MapPin,
   Sparkles,
   LocateFixed,
   Zap,

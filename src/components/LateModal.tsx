@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
-  AlertTriangle, Check, Clock, Copy, Edit3, Globe,
-  MapPin, RefreshCw, Send, Shield, Sparkles, X, AlertCircle,
-  Building2, Briefcase, HeartHandshake, Hotel, Route, CloudRain
+  AlertTriangle, Check, Clock, Copy, Edit3,
+  MapPin, RefreshCw, Shield, Sparkles, X, AlertCircle,
+  Building2, Briefcase, HeartHandshake, Hotel
 } from 'lucide-react';
 import { MapContainer, TileLayer, Polyline, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';

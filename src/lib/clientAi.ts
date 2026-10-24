@@ -310,7 +310,7 @@ export async function processAutonomousQuery(
 
   // Pattern B: Route / Journey Risk Investigation (e.g. "Check road risks from Kochi to Munnar")
   if (lower.includes('from') && lower.includes('to') || lower.includes('route') || lower.includes('journey')) {
-    const routeMatch = text.match(/from\s+([^to]+?)\s+to\s+([^\.\,\?]+)/i);
+    const routeMatch = text.match(/from\s+([^to]+?)\s+to\s+([^.,?]+)/i);
     const originName = routeMatch ? routeMatch[1].trim() : 'Kochi';
     const destName = routeMatch ? routeMatch[2].trim() : 'Munnar';
 

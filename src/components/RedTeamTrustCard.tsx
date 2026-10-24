@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import {
-  ShieldAlert, ShieldCheck, AlertTriangle, HelpCircle,
-  Sparkles, CheckCircle2, ChevronRight, Activity, Zap
+  ShieldAlert, ShieldCheck, AlertTriangle,
+  Sparkles, CheckCircle2
 } from 'lucide-react';
-import type { RedRisk, RedTeamAnalysis, TrustMeterData } from '@/types';
+import type { RedTeamAnalysis, TrustMeterData } from '@/types';
 import { generateClientLLM } from '@/lib/clientAi';
 
 interface RedTeamTrustCardProps {

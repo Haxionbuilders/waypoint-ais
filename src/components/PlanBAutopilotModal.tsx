@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Compass, AlertTriangle, ShieldCheck, Check, ArrowRight,
-  RotateCcw, Activity, MapPin, Sparkles, X, Route, Zap
-} from 'lucide-react';
+import { Compass, Check, Sparkles, X, Route } from 'lucide-react';
 import type { PlanBEvent } from '@/types';
 
 interface PlanBAutopilotModalProps {
@@ -20,7 +17,7 @@ export function PlanBAutopilotModal({
   onApplyPlanB,
   onToast,
 }: PlanBAutopilotModalProps) {
-  const [autopilotActive, setAutopilotActive] = useState(true);
+  const [autopilotActive] = useState(true);
   const [pulseCount, setPulseCount] = useState(1);
   const [activeEvent, setActiveEvent] = useState<PlanBEvent | null>({
     id: 'pb-01',
