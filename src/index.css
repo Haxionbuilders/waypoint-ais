@@ -3713,3 +3713,82 @@ main { padding-right: 0 !important; }
   padding: 2px 7px; border-radius: 5px;
   color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
 }
+
+/* ===== HEADER PILL BUTTONS ===== */
+.header-pill-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 13px;
+  border-radius: 20px;
+  font: 600 12px 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.header-pill-btn.sentinel-btn {
+  background: color-mix(in srgb, #38bdf8 15%, transparent);
+  border: 1px solid color-mix(in srgb, #38bdf8 45%, transparent);
+  color: #38bdf8;
+}
+.header-pill-btn.sentinel-btn:hover {
+  background: color-mix(in srgb, #38bdf8 25%, transparent);
+  border-color: #38bdf8;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(56, 189, 248, 0.25);
+}
+
+.sentinel-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 8px #34d399;
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+.header-pill-btn.voice-btn {
+  background: color-mix(in srgb, #a855f7 15%, transparent);
+  border: 1px solid color-mix(in srgb, #a855f7 45%, transparent);
+  color: #c084fc;
+}
+.header-pill-btn.voice-btn:hover {
+  background: color-mix(in srgb, #a855f7 25%, transparent);
+  border-color: #c084fc;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(168, 85, 247, 0.25);
+}
+
+.settings-input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+  width: 100%;
+}
+.settings-input-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: space-between;
+}
+.settings-input-field {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.settings-input-field:focus {
+  border-color: var(--accent, #64d8ff);
+}
+

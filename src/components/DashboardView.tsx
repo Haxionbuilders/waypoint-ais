@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import { DepartureBriefingCard } from '@/components/DepartureBriefingCard';
 import { SmartPackingModal } from '@/components/SmartPackingModal';
+import { RedTeamTrustCard } from '@/components/RedTeamTrustCard';
+import { Mic, Compass, ShieldCheck } from 'lucide-react';
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -35,6 +37,9 @@ interface DashboardViewProps {
   onOpenPasteBooking: () => void;
   onOpenPhotoReport: () => void;
   onOpenRecovery: (trip: Journey) => void;
+  onOpenVoiceCopilot?: () => void;
+  onOpenPlanB?: () => void;
+  onOpenSafeArrival?: () => void;
   userPos: { lat: number; lng: number; accuracy: number } | null;
   onToast: (msg: string) => void;
 }
@@ -247,6 +252,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   onOpenPasteBooking,
   onOpenPhotoReport,
   onOpenRecovery,
+  onOpenVoiceCopilot,
+  onOpenPlanB,
+  onOpenSafeArrival,
   userPos,
   onToast,
 }) => {
@@ -304,7 +312,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
       {/* ---- Quick Actions ---- */}
       <div>
-        <p style={sectionLabel}>Quick Actions</p>
+        <p style={sectionLabel}>Quick Actions & Autonomous Agents</p>
         <div
           style={{
             display: 'grid',
@@ -312,12 +320,36 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             gap: 14,
           }}
         >
+          {onOpenPlanB && (
+            <ActionCard
+              icon={<Compass size={20} color="#38bdf8" />}
+              title="Plan B Autopilot Sentinel"
+              description="Autonomous watchdog & detour detector"
+              onClick={onOpenPlanB}
+              pulse
+            />
+          )}
+          {onOpenVoiceCopilot && (
+            <ActionCard
+              icon={<Mic size={20} color="#a855f7" />}
+              title="Voice Co-Pilot"
+              description="Hands-free audio travel companion"
+              onClick={onOpenVoiceCopilot}
+            />
+          )}
+          {onOpenSafeArrival && (
+            <ActionCard
+              icon={<ShieldCheck size={20} color="#34d399" />}
+              title="Safe Arrival Sentinel"
+              description="Countdown timer with WhatsApp escalation"
+              onClick={onOpenSafeArrival}
+            />
+          )}
           <ActionCard
             icon={<AlertTriangle size={20} color="var(--accent, #64d8ff)" />}
             title="I'm Running Late"
             description="Notify contacts and get re‑routed"
             onClick={onOpenLateModal}
-            pulse
           />
           <ActionCard
             icon={<Briefcase size={20} color="var(--accent, #64d8ff)" />}
@@ -327,8 +359,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           />
           <ActionCard
             icon={<Camera size={20} color="var(--accent, #64d8ff)" />}
-            title="Photo Hazard Report"
-            description="Snap a photo and file a report"
+            title="Point & Understand (Hazard)"
+            description="Snap a photo or road sign and analyze"
             onClick={onOpenPhotoReport}
           />
           <ActionCard
@@ -347,6 +379,19 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             }}
           />
         </div>
+      </div>
+
+      {/* ---- Adversarial Skeptic & Calibrated Trust Meter ---- */}
+      <div>
+        <p style={sectionLabel}>Plan Verification & Adversarial Skeptic</p>
+        <RedTeamTrustCard
+          destination="Munnar Hill Station"
+          travelMode="driving"
+          distanceKm={128}
+          durationMin={190}
+          weatherCondition="Light drizzle, 22°C"
+          onToast={onToast}
+        />
       </div>
 
       {showPacking && (

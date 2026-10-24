@@ -160,3 +160,58 @@ export interface TravelBriefing {
   contingency_advice: string;
   word_count: number;
 }
+
+// --- Innovative Judge-Demo Features ---
+
+export interface RedRisk {
+  assumption: string;
+  whatCouldGoWrong: string;
+  severity: 'low' | 'medium' | 'high';
+  check: string;
+}
+
+export interface RedTeamAnalysis {
+  verdict: string;
+  risks: RedRisk[];
+  overallRiskScore: number; // 0-100
+  aiAssisted: boolean;
+  generated_at: string;
+}
+
+export interface TrustMeterData {
+  officialPercent: number;
+  forecastPercent: number;
+  estimatePercent: number;
+  aiPercent: number;
+  totalClaims: number;
+  overallTrustScore: number; // 0-100
+}
+
+export interface PlanBEvent {
+  id: string;
+  title: string;
+  triggerReason: string;
+  severity: 'medium' | 'high' | 'critical';
+  impactMinutes: number;
+  alternativeRouteName: string;
+  alternativeKm: number;
+  alternativeMinutes: number;
+  suggestedAction: string;
+  draftDelayMessage: {
+    subject: string;
+    body: string;
+  };
+  detected_at: string;
+  status: 'pending' | 'accepted' | 'dismissed';
+}
+
+export interface SafeArrivalSession {
+  id: string;
+  destination: string;
+  eta: string;
+  bufferMinutes: number;
+  emergencyContactName: string;
+  emergencyContactPhone: string;
+  status: 'monitoring' | 'arrived' | 'overdue' | 'dispatched';
+  startedAt: string;
+}
